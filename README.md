@@ -25,21 +25,6 @@ A digital stopwatch that shows the elapsed time and the last lap on a 16 × 
 | Power     | 5 V supply with on‑board 3 V3 regulator  |
 | Schematic | See `docs/schematic.pdf`                 |
 
-## Repository Layout
-
-```
-.
-├── components/
-│   └── lcd1602/        # LCD driver provided by the course
-├── main/
-│   ├── stopwatch.c     # single‑file implementation
-│   └── CMakeLists.txt
-├── docs/
-│   ├── schematic.pdf
-│   └── html/           # Doxygen output
-└── README.md
-```
-
 ## Building & Flashing
 
 ```bash
@@ -60,22 +45,6 @@ doxygen Doxyfile
 ```
 
 The output will be placed under `docs/html`.
-
-## Grading Summary
-
-The final score **NP** is computed as
-
-```
-NP = (A / 10) × (8 C / 10 + 2 D / 10)
-```
-
-| Symbol | Meaning                             |
-| ------ | ----------------------------------- |
-| **A**  | Oral examination (0–10)             |
-| **C**  | Code quality & functionality (0–10) |
-| **D**  | Documentation quality (0–10)        |
-
-Refer to the official assignment hand‑out for the full rubric.
 
 ## Useful Links
 
