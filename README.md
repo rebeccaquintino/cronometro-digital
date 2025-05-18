@@ -48,7 +48,7 @@ The output will be placed under `docs/html`.
 
 ## Useful Links
 
-* Course simulator: [https://presencial.moodle.ufsc.br/pluginfile.php/1275661/mod\_folder/content/0/Simulador.html](https://presencial.moodle.ufsc.br/pluginfile.php/1275661/mod_folder/content/0/Simulador.html)
+* Course simulator: [https://wokwi.com/projects/429878183402671105](https://wokwi.com/projects/429878183402671105)
 * `esp_timer` API reference
 * LCD1602 datasheet
 
