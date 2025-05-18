@@ -48,7 +48,7 @@ The output will be placed under `docs/html`.
 
 ## Useful Links
 
-* Course simulator: [https://wokwi.com/projects/429878183402671105](https://wokwi.com/projects/429878183402671105)
+* Course simulator: [https://wokwi.com/projects/431322677455346689](https://wokwi.com/projects/431322677455346689)
 * `esp_timer` API reference
 * LCD1602 datasheet
 
