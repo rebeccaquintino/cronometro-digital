@@ -8,15 +8,17 @@
  * @author Rebecca Quintino Do Ó
  * @date 2025-05-20
  */
-
-#include "display_lcd.h"
+#include <stdio.h>
+#include <stdbool.h>
+#include <unistd.h>
 #include "driver/gptimer.h"
 #include "esp_task_wdt.h"
 #include "driver/gpio.h"
 #include "esp_timer.h"
-#include "esp_log.h"
 
-// Variáveis globais
+#include "display_lcd.h"
+
+/// Variáveis globais
 uint8_t centesimos = 0, segundos = 0, minutos = 0;
 uint8_t cent_ant = 0, sec_ant = 0, min_ant = 0;
 uint8_t cent_volta = 0, sec_volta = 0, min_volta = 0;
@@ -33,9 +35,9 @@ display_lcd_config_t config_display = {
     .RS = 9, .E = 10
 };
 
-// Protótipos
+/// Protótipos
 static void configura_botao(void);
-static void isr_botao_handler(void *arg); 
+static void isr_botao_handler(void *arg);
 static void debounce_timer_callback(void *arg);
 static bool funcao_tratamento_alarme(gptimer_handle_t temporizador, const gptimer_alarm_event_data_t *edata, void *user_ctx);
 static gptimer_handle_t configura_temporizador(void);
@@ -65,9 +67,9 @@ void app_main() {
             centesimos = segundos = minutos = 0;
         }
 
-        snprintf(str_time, sizeof(str_time), "Tempo %02u:%02u:%02u", minutos, segundos, centesimos); 
-        snprintf(str_volta, sizeof(str_volta), "Volta %02u:%02u:%02u", min_volta, sec_volta, cent_volta); 
-        lcd_escreve_2_linhas(str_time, str_volta);      
+        snprintf(str_time, sizeof(str_time), "Tempo %02u:%02u:%02u", minutos, segundos, centesimos);
+        snprintf(str_volta, sizeof(str_volta), "Volta %02u:%02u:%02u", min_volta, sec_volta, cent_volta);
+        lcd_escreve_2_linhas(str_time, str_volta);
     }
 }
 
@@ -100,7 +102,7 @@ static gptimer_handle_t configura_temporizador(void) {
     };
     gptimer_register_event_callbacks(temporizador_aux, &config_callback, NULL);
 
-    gptimer_enable(temporizador_aux); 
+    gptimer_enable(temporizador_aux);
     return temporizador_aux;
 }
 
@@ -136,14 +138,12 @@ static void debounce_timer_callback(void *arg) {
                 if(!contando) {
                     gptimer_start(temporizador);
                     contando = true;
-                    ESP_LOGI("BOTOES", "Start pressionado");
                 }
                 break;
             case 1:  ///< Stop
                 if(contando) {
                     gptimer_stop(temporizador);
                     contando = false;
-                    ESP_LOGI("BOTOES", "Stop pressionado");
                 }
                 break;
             case 2:  ///< Volta
@@ -154,7 +154,6 @@ static void debounce_timer_callback(void *arg) {
                     min_ant = minutos;
                     sec_ant = segundos;
                     cent_ant = centesimos;
-                    ESP_LOGI("BOTOES", "Volta pressionada");
                 }
                 break;
             case 3:  ///< Reset
@@ -165,7 +164,6 @@ static void debounce_timer_callback(void *arg) {
                     min_ant = sec_ant = cent_ant = 0;
                     gptimer_start(temporizador);
                     contando = true;
-                    ESP_LOGI("BOTOES", "Reset pressionado");
                 }
                 break;
             default:
@@ -194,7 +192,7 @@ static void isr_botao_handler(void *arg) {
  * Define os pinos como entrada com pull-up e configura as interrupções por borda de subida.
  */
 static void configura_botao(void) {
-    gpio_config_t io_cfg_button = { 
+    gpio_config_t io_cfg_button = {
         .pin_bit_mask =  (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3),
         .mode = GPIO_MODE_INPUT,
         .pull_up_en = GPIO_PULLUP_ENABLE,
